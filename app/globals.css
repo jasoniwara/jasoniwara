@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FAF9F6;
+  color: #1A1A18;
+  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #7C2320;
+  color: #FAF9F6;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus, editorial style: a red underline rather than a default glow */
+a:focus-visible,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 2px 0 0 #7C2320;
+}
+
+.kicker {
+  font-variant: small-caps;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.rule {
+  border-color: #D9D5C9;
+}
+
+.dot-leader {
+  flex: 1;
+  border-bottom: 1px dotted #B9B4A5;
+  margin: 0 0.75rem;
+  height: 1px;
+  transform: translateY(-0.35rem);
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-size: 3.4rem;
+  line-height: 0.85;
+  padding-right: 0.35rem;
+  padding-top: 0.15rem;
+  font-weight: 700;
+  color: #7C2320;
+}
+
+.stamp {
+  border: 1.5px solid #7C2320;
+  color: #7C2320;
+  transform: rotate(-4deg);
+}
