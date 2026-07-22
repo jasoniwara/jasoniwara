@@ -189,6 +189,7 @@ export default function AdminPage() {
             { key: 'description', label: 'Description', textarea: true },
             { key: 'date', label: 'Date' },
             { key: 'readTime', label: 'Read time' },
+            { key: 'image', label: 'Image path (/images/filename.jpg)' },
           ].map((f) => (
             <label key={f.key} className="flex flex-col gap-1 text-sm">
               <span className="kicker text-soft">{f.label}</span>
@@ -227,6 +228,8 @@ export default function AdminPage() {
             { key: 'category', label: 'Category' },
             { key: 'date', label: 'Date' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'image', label: 'Image path (/images/filename.jpg)', wide: true },
+            { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
         <SaveButton
@@ -246,6 +249,7 @@ export default function AdminPage() {
             { key: 'sport', label: 'Sport' },
             { key: 'title', label: 'Story title' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
         <SaveButton
@@ -264,6 +268,8 @@ export default function AdminPage() {
             { key: 'title', label: 'Title' },
             { key: 'duration', label: 'Duration (mm:ss)' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'videoUrl', label: 'YouTube / Vimeo URL', wide: true },
+            { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
         <SaveButton
@@ -336,6 +342,7 @@ export default function AdminPage() {
           fields={[
             { key: 'caption', label: 'Caption' },
             { key: 'category', label: 'Category' },
+            { key: 'image', label: 'Image path (/images/filename.jpg)', wide: true },
           ]}
         />
         <SaveButton
@@ -353,6 +360,15 @@ export default function AdminPage() {
               type="text"
               value={content.about.photoCaption || ''}
               onChange={(e) => setContent({ ...content, about: { ...content.about, photoCaption: e.target.value } })}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Photo path (/images/filename.jpg)</span>
+            <input
+              type="text"
+              value={content.about.photo || ''}
+              onChange={(e) => setContent({ ...content, about: { ...content.about, photo: e.target.value } })}
               className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
             />
           </label>
