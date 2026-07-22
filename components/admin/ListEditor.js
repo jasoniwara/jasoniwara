@@ -1,5 +1,7 @@
 'use client';
 
+import ImageUploadField from './ImageUploadField';
+
 export default function ListEditor({ items, onChange, fields, addLabel = 'Add item' }) {
   const update = (index, key, value) => {
     const next = items.slice();
@@ -32,7 +34,16 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
             Remove
           </button>
           <div className="grid sm:grid-cols-2 gap-3 pr-16">
-            {fields.map((f) => (
+            {fields.map((f) =>
+              f.image ? (
+                <div key={f.key} className={f.wide ? 'sm:col-span-2' : ''}>
+                  <ImageUploadField
+                    label={f.label}
+                    value={item[f.key]}
+                    onChange={(url) => update(i, f.key, url)}
+                  />
+                </div>
+              ) : (
               <label
                 key={f.key}
                 className={`flex ${f.checkbox ? 'flex-row items-center gap-2' : 'flex-col gap-1'} text-sm ${f.wide ? 'sm:col-span-2' : ''}`}
@@ -82,7 +93,8 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
                   </>
                 )}
               </label>
-            ))}
+              )
+            )}
           </div>
         </div>
       ))}

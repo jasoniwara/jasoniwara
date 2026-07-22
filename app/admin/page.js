@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import ListEditor from '@/components/admin/ListEditor';
+import ImageUploadField from '@/components/admin/ImageUploadField';
 
 const emptyContent = {
   site: {},
@@ -189,7 +190,6 @@ export default function AdminPage() {
             { key: 'description', label: 'Description', textarea: true },
             { key: 'date', label: 'Date' },
             { key: 'readTime', label: 'Read time' },
-            { key: 'image', label: 'Image path (/images/filename.jpg)' },
             { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true },
           ].map((f) => (
             <label key={f.key} className="flex flex-col gap-1 text-sm">
@@ -227,6 +227,11 @@ export default function AdminPage() {
               )}
             </label>
           ))}
+          <ImageUploadField
+            label="Image"
+            value={content.hero.image}
+            onChange={(url) => setContent({ ...content, hero: { ...content.hero, image: url } })}
+          />
         </div>
         <SaveButton
           saving={savingKey === 'hero'}
@@ -245,7 +250,7 @@ export default function AdminPage() {
             { key: 'category', label: 'Category' },
             { key: 'date', label: 'Date' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
-            { key: 'image', label: 'Image path (/images/filename.jpg)', wide: true },
+            { key: 'image', label: 'Image', image: true, wide: true },
             { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
             { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
@@ -365,7 +370,7 @@ export default function AdminPage() {
           fields={[
             { key: 'caption', label: 'Caption' },
             { key: 'category', label: 'Category' },
-            { key: 'image', label: 'Image path (/images/filename.jpg)', wide: true },
+            { key: 'image', label: 'Image', image: true, wide: true },
           ]}
         />
         <SaveButton
@@ -386,15 +391,11 @@ export default function AdminPage() {
               className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
             />
           </label>
-          <label className="flex flex-col gap-1 text-sm">
-            <span className="kicker text-soft">Photo path (/images/filename.jpg)</span>
-            <input
-              type="text"
-              value={content.about.photo || ''}
-              onChange={(e) => setContent({ ...content, about: { ...content.about, photo: e.target.value } })}
-              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
-            />
-          </label>
+          <ImageUploadField
+            label="Photo"
+            value={content.about.photo}
+            onChange={(url) => setContent({ ...content, about: { ...content.about, photo: url } })}
+          />
         </div>
         <p className="kicker text-soft mb-2">Bio paragraphs</p>
         <div className="flex flex-col gap-3 mb-6">
