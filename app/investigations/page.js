@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PageIntro from '@/components/PageIntro';
 import { getContent } from '@/lib/content';
 
@@ -17,7 +18,11 @@ export default async function InvestigationsPage() {
           {investigations.map((piece) => (
             <article key={piece.slug} className="border-t border-rule pt-6">
               <p className="kicker text-soft mb-2">{piece.date}</p>
-              <h3 className="font-serif text-2xl text-ink mb-3 leading-snug">{piece.title}</h3>
+              <Link href={`/investigations/${piece.slug}`} className="group">
+                <h3 className="font-serif text-2xl text-ink mb-3 leading-snug group-hover:text-press transition-colors duration-200">
+                  {piece.title}
+                </h3>
+              </Link>
               <p className="text-soft leading-relaxed">{piece.description}</p>
             </article>
           ))}

@@ -13,6 +13,12 @@
 // Add `featured: true` to items in featuredStories, athleteProfiles, or
 // documentaries to control what shows on the homepage. If nothing in a list
 // is marked featured, the homepage falls back to the first 3 items in array order.
+//
+// `body` holds the full text of a story as an array of paragraph strings —
+// each entry in the array becomes one <p> on the story's own page (e.g.
+// /featured-stories/fourth-quarter-kid, /writing/sixth-grade-cuts). This is
+// separate from `description`, which stays a short teaser used on cards and
+// list rows. Replace the placeholder paragraph below with the real story.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const site = {
@@ -46,6 +52,9 @@ export const hero = {
     'A season embedded with three varsity programs reveals what separates the athletes who last from the ones who burn out — long before scholarship offers ever arrive.',
   date: 'July 18, 2026',
   readTime: '12 min read',
+  body: [
+    'Full story text goes here — replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Hero section in /admin.',
+  ],
 };
 
 // Full list — homepage shows the first 3, /featured-stories shows all of them.
@@ -57,6 +66,9 @@ export const featuredStories = [
     date: 'June 30, 2026',
     description:
       'A point guard who never starts, and the coach who insists she is the most important player on the roster.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
   {
     slug: 'what-the-trainers-know',
@@ -65,6 +77,9 @@ export const featuredStories = [
     date: 'June 12, 2026',
     description:
       'Inside the quiet epidemic of overuse injuries in youth sports, and the athletic trainers fighting to be heard.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
   {
     slug: 'two-miles-before-sunrise',
@@ -73,6 +88,9 @@ export const featuredStories = [
     date: 'May 24, 2026',
     description:
       'Before school even opens, a cross-country team is already three miles into a routine built on more than mileage.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
   {
     slug: 'the-scout-in-section-c',
@@ -81,6 +99,9 @@ export const featuredStories = [
     date: 'May 3, 2026',
     description:
       'A regular in the stands has quietly shaped a decade of college recruiting — and never once introduced himself.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
   {
     slug: 'the-equipment-room',
@@ -89,6 +110,9 @@ export const featuredStories = [
     date: 'April 19, 2026',
     description:
       'The man who has re-strung, re-laced, and repaired every team in the building for eleven years, unpaid.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
   {
     slug: 'benched-by-choice',
@@ -97,6 +121,9 @@ export const featuredStories = [
     date: 'April 2, 2026',
     description:
       'A star freshman asked to be moved down a level. What happened next surprised everyone, including her coach.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Featured Stories section in /admin.',
+    ],
   },
 ];
 
@@ -193,48 +220,72 @@ export const latestWriting = [
     title: 'Why Sixth-Grade Cuts Still Sting at Seventeen',
     category: 'Column',
     date: 'July 14, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'recruiting-dms',
     title: 'Inside the Recruiting DMs Coaches Never See',
     category: 'Reporting',
     date: 'July 6, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'assistant-coaches',
     title: 'The Assistant Coaches Who Never Get Mentioned',
     category: 'Feature',
     date: 'June 22, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'scorebook-1998',
     title: 'A Scorebook From 1998, Still in Use',
     category: 'Human Interest',
     date: 'June 9, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'jv-to-varsity',
     title: 'What Actually Changes Between JV and Varsity',
     category: 'Reporting',
     date: 'May 28, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'the-bus-rides',
     title: 'The Bus Rides Are Where the Team Actually Forms',
     category: 'Column',
     date: 'May 15, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'senior-night',
     title: 'What Senior Night Looks Like From the Press Box',
     category: 'Feature',
     date: 'April 30, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
   {
     slug: 'the-injury-report',
     title: 'Reading Between the Lines of the Injury Report',
     category: 'Column',
     date: 'April 11, 2026',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Writing section in /admin.',
+    ],
   },
 ];
 
@@ -246,6 +297,9 @@ export const investigations = [
     date: 'June 12, 2026',
     description:
       'Inside the quiet epidemic of overuse injuries in youth sports, and the athletic trainers fighting to be heard.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Investigations section in /admin.',
+    ],
   },
   {
     slug: 'the-transfer-portal-nobody-explains',
@@ -253,6 +307,9 @@ export const investigations = [
     date: 'May 9, 2026',
     description:
       'A review of transfer paperwork and interviews with a dozen families reveals how little guidance exists before a decision that reshapes a season.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Investigations section in /admin.',
+    ],
   },
   {
     slug: 'who-pays-for-the-bus',
@@ -260,6 +317,9 @@ export const investigations = [
     date: 'March 21, 2026',
     description:
       'A look at the booster-club fundraising that quietly keeps several varsity programs running, and what happens the year it falls short.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Investigations section in /admin.',
+    ],
   },
 ];
 
@@ -271,6 +331,9 @@ export const schoolNewspaper = [
     publication: 'The Chapel Hill Chronicle',
     date: 'October 18, 2025',
     description: 'Game story and sideline reporting from the season\u2019s most-attended home game.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the School Newspaper section in /admin.',
+    ],
   },
   {
     slug: 'budget-cuts-athletics',
@@ -278,6 +341,9 @@ export const schoolNewspaper = [
     publication: 'The Chapel Hill Chronicle',
     date: 'February 6, 2026',
     description: 'News reporting on a district budget vote and its effect on junior varsity programs.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the School Newspaper section in /admin.',
+    ],
   },
   {
     slug: 'senior-athletes-college-decisions',
@@ -285,6 +351,9 @@ export const schoolNewspaper = [
     publication: 'The Chapel Hill Chronicle',
     date: 'April 22, 2026',
     description: 'A senior-year roundup profiling twelve athletes and their college commitments.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the School Newspaper section in /admin.',
+    ],
   },
 ];
 

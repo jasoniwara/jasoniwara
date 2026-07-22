@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import SectionHeading from './SectionHeading';
 
 export default function LatestWriting({ items }) {
@@ -11,8 +12,8 @@ export default function LatestWriting({ items }) {
       <ul>
         {items.slice(0, 4).map((piece) => (
           <li key={piece.slug} className="border-b border-rule">
-            <a
-              href="#"
+            <Link
+              href={`/writing/${piece.slug}`}
               className="group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-5"
             >
               <span className="kicker text-soft sm:w-32 shrink-0">{piece.date}</span>
@@ -20,7 +21,7 @@ export default function LatestWriting({ items }) {
                 {piece.title}
               </span>
               <span className="kicker text-press shrink-0">{piece.category}</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

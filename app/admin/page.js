@@ -190,10 +190,27 @@ export default function AdminPage() {
             { key: 'date', label: 'Date' },
             { key: 'readTime', label: 'Read time' },
             { key: 'image', label: 'Image path (/images/filename.jpg)' },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true },
           ].map((f) => (
             <label key={f.key} className="flex flex-col gap-1 text-sm">
               <span className="kicker text-soft">{f.label}</span>
-              {f.textarea ? (
+              {f.paragraphs ? (
+                <textarea
+                  value={(content.hero[f.key] || []).join('\n\n')}
+                  onChange={(e) =>
+                    setContent({
+                      ...content,
+                      hero: {
+                        ...content.hero,
+                        [f.key]: e.target.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
+                      },
+                    })
+                  }
+                  rows={6}
+                  placeholder="Separate paragraphs with a blank line"
+                  className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+                />
+              ) : f.textarea ? (
                 <textarea
                   value={content.hero[f.key] || ''}
                   onChange={(e) => setContent({ ...content, hero: { ...content.hero, [f.key]: e.target.value } })}
@@ -229,6 +246,7 @@ export default function AdminPage() {
             { key: 'date', label: 'Date' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
             { key: 'image', label: 'Image path (/images/filename.jpg)', wide: true },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
             { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
@@ -288,6 +306,7 @@ export default function AdminPage() {
             { key: 'title', label: 'Title' },
             { key: 'category', label: 'Category' },
             { key: 'date', label: 'Date' },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
           ]}
         />
         <SaveButton
@@ -306,6 +325,7 @@ export default function AdminPage() {
             { key: 'title', label: 'Title' },
             { key: 'date', label: 'Date' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
           ]}
         />
         <SaveButton
@@ -325,6 +345,7 @@ export default function AdminPage() {
             { key: 'publication', label: 'Publication' },
             { key: 'date', label: 'Date' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
           ]}
         />
         <SaveButton

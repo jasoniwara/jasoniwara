@@ -14,7 +14,7 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
   const add = () => {
     const blank = {};
     fields.forEach((f) => {
-      blank[f.key] = f.checkbox ? false : '';
+      blank[f.key] = f.checkbox ? false : f.paragraphs ? [] : '';
     });
     onChange([...items, blank]);
   };
@@ -50,7 +50,21 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
                 ) : (
                   <>
                     <span className="kicker text-soft">{f.label}</span>
-                    {f.textarea ? (
+                    {f.paragraphs ? (
+                      <textarea
+                        value={(item[f.key] || []).join('\n\n')}
+                        onChange={(e) =>
+                          update(
+                            i,
+                            f.key,
+                            e.target.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+                          )
+                        }
+                        rows={6}
+                        placeholder="Separate paragraphs with a blank line"
+                        className="border border-rule bg-paper px-3 py-2 font-serif text-ink focus:outline-none focus:border-ink"
+                      />
+                    ) : f.textarea ? (
                       <textarea
                         value={item[f.key] || ''}
                         onChange={(e) => update(i, f.key, e.target.value)}
