@@ -6,11 +6,14 @@ import { getContent } from '@/lib/content';
 // per request rather than being cached as static HTML at build time.
 export const dynamic = 'force-dynamic';
 
-export const metadata = {
-  title: 'jordan reese — sports & human-interest reporting',
-  description:
-    'Portfolio of sports journalism, athlete profiles, documentaries, and investigative reporting.',
-};
+export async function generateMetadata() {
+  const { site } = await getContent();
+  return {
+    title: `${site.name} — ${site.tagline}`,
+    description:
+      'Portfolio of sports journalism, athlete profiles, documentaries, and investigative reporting.',
+  };
+}
 
 export default async function RootLayout({ children }) {
   const content = await getContent();

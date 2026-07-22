@@ -136,6 +136,9 @@ export const athleteProfiles = [
     title: 'The Long Way Around',
     description:
       'A district champion hurdler on rebuilding her form, and her confidence, after an injury sidelined her junior season.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
   {
     slug: 'diego-fuentes',
@@ -144,6 +147,9 @@ export const athleteProfiles = [
     title: 'Making Weight, Making Peace',
     description:
       'A 138-pound wrestler and his family confront the culture of cutting weight in a sport built around control.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
   {
     slug: 'aaliyah-chen',
@@ -152,6 +158,9 @@ export const athleteProfiles = [
     title: 'The Last Lane',
     description:
       'A senior swimmer\u2019s final season, and what it means to walk away from a pool you have called home since age six.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
   {
     slug: 'malik-thompson',
@@ -160,6 +169,9 @@ export const athleteProfiles = [
     title: 'The Backup Plan',
     description:
       'A third-string quarterback spends four years preparing for a moment that arrives with two minutes left in the season.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
   {
     slug: 'sofia-reyes',
@@ -168,6 +180,9 @@ export const athleteProfiles = [
     title: 'Playing for Two Teams',
     description:
       'A midfielder splits her year between her high school squad and a club team three states away. Neither one gets all of her.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
   {
     slug: 'nate-park',
@@ -176,6 +191,9 @@ export const athleteProfiles = [
     title: 'The Quietest Sport in the Building',
     description:
       'A state-ranked golfer on the loneliness of a sport with no bench, no teammates on the course, and no clock to beat.',
+    body: [
+      'Full story text goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Athlete Profiles section in /admin.',
+    ],
   },
 ];
 
@@ -186,30 +204,45 @@ export const documentaries = [
     title: 'Friday Night, Every Night',
     duration: '18:42',
     description: 'A short documentary following a small-town football program through a losing season.',
+    body: [
+      'Full write-up goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Documentaries section in /admin.',
+    ],
   },
   {
     slug: 'the-walk-on',
     title: 'The Walk-On',
     duration: '11:05',
     description: 'One player\u2019s three-year path from the practice squad to a varsity letter.',
+    body: [
+      'Full write-up goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Documentaries section in /admin.',
+    ],
   },
   {
     slug: 'coachs-daughter',
     title: 'Coach\u2019s Daughter',
     duration: '14:30',
     description: 'A profile of a head coach\u2019s daughter, now the starting quarterback on his own team.',
+    body: [
+      'Full write-up goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Documentaries section in /admin.',
+    ],
   },
   {
     slug: 'the-scoreboard-operator',
     title: 'The Scoreboard Operator',
     duration: '09:18',
     description: 'A retired teacher has run the scoreboard at every home game for eighteen years. He has his own rules.',
+    body: [
+      'Full write-up goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Documentaries section in /admin.',
+    ],
   },
   {
     slug: 'two-gyms',
     title: 'Two Gyms',
     duration: '16:52',
     description: 'A look inside the daily doubleheader for athletes who play one sport in the morning and another at night.',
+    body: [
+      'Full write-up goes here \u2014 replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Documentaries section in /admin.',
+    ],
   },
 ];
 

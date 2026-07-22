@@ -1,18 +1,21 @@
+import Link from 'next/link';
 import { getEmbedUrl } from '@/lib/embed';
 
-export default function ProjectCard({ title, duration, description, videoUrl }) {
+export default function ProjectCard({ slug, title, duration, description, videoUrl }) {
   const embedUrl = getEmbedUrl(videoUrl);
 
   return (
-    <article className="group border border-rule bg-paper hover:border-ink transition-colors duration-300">
+    <Link
+      href={`/documentaries/${slug}`}
+      className="group block border border-rule bg-paper hover:border-ink transition-colors duration-300"
+    >
       <div className="relative aspect-video bg-ink flex items-center justify-center overflow-hidden">
         {embedUrl ? (
           <iframe
             src={embedUrl}
             title={title}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full pointer-events-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
           />
         ) : (
           <div
@@ -38,6 +41,6 @@ export default function ProjectCard({ title, duration, description, videoUrl }) 
         </h3>
         <p className="text-soft text-[0.95rem] leading-relaxed">{description}</p>
       </div>
-    </article>
+    </Link>
   );
 }

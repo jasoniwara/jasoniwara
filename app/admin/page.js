@@ -267,6 +267,7 @@ export default function AdminPage() {
             { key: 'sport', label: 'Sport' },
             { key: 'title', label: 'Story title' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
+            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true, wide: true },
             { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
@@ -287,6 +288,7 @@ export default function AdminPage() {
             { key: 'duration', label: 'Duration (mm:ss)' },
             { key: 'description', label: 'Description', textarea: true, wide: true },
             { key: 'videoUrl', label: 'YouTube / Vimeo URL', wide: true },
+            { key: 'body', label: 'Full write-up (blank line between paragraphs)', paragraphs: true, wide: true },
             { key: 'featured', label: 'Featured on homepage', checkbox: true },
           ]}
         />
