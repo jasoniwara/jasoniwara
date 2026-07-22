@@ -10,9 +10,11 @@ export default function Documentaries({ items }) {
         seeAllHref="/documentaries"
       />
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {items.slice(0, 3).map((doc) => (
-          <ProjectCard key={doc.slug} {...doc} />
-        ))}
+        {(items.some((doc) => doc.featured) ? items.filter((doc) => doc.featured) : items)
+          .slice(0, 3)
+          .map((doc) => (
+            <ProjectCard key={doc.slug} {...doc} />
+          ))}
       </div>
     </section>
   );

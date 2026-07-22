@@ -5,9 +5,14 @@
 // full "see all" pages both read from these same arrays. You never need
 // to touch a component file just to update copy.
 //
-// Swap in real photos by dropping files into /public/images and replacing
-// the placeholder blocks in ArticleCard.js, ProjectCard.js, and Hero.js
-// with <img> tags pointing at them.
+// Swap in real photos by dropping files into /public/images and adding an
+// `image: '/images/filename.jpg'` field to the relevant item (featuredStories,
+// hero, photography, about.photo). Add `videoUrl: 'https://youtube.com/...'`
+// to a documentaries item to embed a YouTube/Vimeo video via lib/embed.js.
+//
+// Add `featured: true` to items in featuredStories, athleteProfiles, or
+// documentaries to control what shows on the homepage. If nothing in a list
+// is marked featured, the homepage falls back to the first 3 items in array order.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const site = {

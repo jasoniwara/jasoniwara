@@ -16,8 +16,12 @@ export default async function PhotographyPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {photography.map((photo, i) => (
             <figure key={i} className="border border-rule">
-              <div className="aspect-[4/5] bg-panel flex items-center justify-center">
-                <span className="kicker text-soft">Image Placeholder</span>
+              <div className="aspect-[4/5] bg-panel flex items-center justify-center overflow-hidden">
+                {photo.image ? (
+                  <img src={photo.image} alt={photo.caption} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="kicker text-soft">Image Placeholder</span>
+                )}
               </div>
               <figcaption className="p-4">
                 <p className="kicker text-press mb-1">{photo.category}</p>

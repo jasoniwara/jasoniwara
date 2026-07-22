@@ -1,8 +1,12 @@
-export default function ArticleCard({ title, category, date, description }) {
+export default function ArticleCard({ title, category, date, description, image }) {
   return (
     <article className="group border border-rule bg-paper hover:border-ink transition-colors duration-300">
-      <div className="aspect-[16/10] bg-panel border-b border-rule flex items-center justify-center">
-        <span className="kicker text-soft">Image Placeholder</span>
+      <div className="aspect-[16/10] bg-panel border-b border-rule flex items-center justify-center overflow-hidden">
+        {image ? (
+          <img src={image} alt={title} className="w-full h-full object-cover" />
+        ) : (
+          <span className="kicker text-soft">Image Placeholder</span>
+        )}
       </div>
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">

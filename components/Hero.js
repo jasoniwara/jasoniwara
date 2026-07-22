@@ -19,8 +19,14 @@ export default function Hero({ hero }) {
 
         <div className="order-1 md:order-2">
           <div className="relative aspect-[4/3] w-full bg-panel border border-rule flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(circle_at_30%_20%,#1A1A18_1px,transparent_1px)] bg-[length:14px_14px]" />
-            <span className="kicker text-soft z-10">Featured Image / Video</span>
+            {hero.image ? (
+              <img src={hero.image} alt={hero.headline} className="w-full h-full object-cover" />
+            ) : (
+              <>
+                <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(circle_at_30%_20%,#1A1A18_1px,transparent_1px)] bg-[length:14px_14px]" />
+                <span className="kicker text-soft z-10">Featured Image / Video</span>
+              </>
+            )}
             <span className="stamp absolute bottom-4 right-4 text-[0.65rem] px-2 py-1 kicker">
               Filed
             </span>

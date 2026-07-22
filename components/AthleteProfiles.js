@@ -1,7 +1,9 @@
 import SectionHeading from './SectionHeading';
 
 export default function AthleteProfiles({ items }) {
-  const featured = items.slice(0, 3);
+  const featured = (
+    items.some((profile) => profile.featured) ? items.filter((profile) => profile.featured) : items
+  ).slice(0, 3);
   return (
     <section className="max-w-content mx-auto px-6 md:px-10 py-16 border-b border-rule">
       <SectionHeading

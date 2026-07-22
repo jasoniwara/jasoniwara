@@ -8,8 +8,12 @@ export default async function AboutPage() {
     <section className="max-w-content mx-auto px-6 md:px-10 py-16">
       <div className="grid md:grid-cols-3 gap-12">
         <div className="md:col-span-1">
-          <div className="aspect-[4/5] bg-panel border border-rule flex items-center justify-center mb-4">
-            <span className="kicker text-soft">{about.photoCaption}</span>
+          <div className="aspect-[4/5] bg-panel border border-rule flex items-center justify-center mb-4 overflow-hidden">
+            {about.photo ? (
+              <img src={about.photo} alt={about.photoCaption} className="w-full h-full object-cover" />
+            ) : (
+              <span className="kicker text-soft">{about.photoCaption}</span>
+            )}
           </div>
           <dl>
             {(about.facts || []).map((fact) => (
