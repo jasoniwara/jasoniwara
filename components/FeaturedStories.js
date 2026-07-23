@@ -2,6 +2,8 @@ import ArticleCard from './ArticleCard';
 import SectionHeading from './SectionHeading';
 
 export default function FeaturedStories({ items }) {
+  if (!items || items.length === 0) return null;
+
   return (
     <section className="max-w-content mx-auto px-6 md:px-10 py-16 border-b border-rule">
       <SectionHeading

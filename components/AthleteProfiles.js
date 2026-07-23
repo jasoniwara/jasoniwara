@@ -2,6 +2,8 @@ import Link from 'next/link';
 import SectionHeading from './SectionHeading';
 
 export default function AthleteProfiles({ items }) {
+  if (!items || items.length === 0) return null;
+
   const featured = (
     items.some((profile) => profile.featured) ? items.filter((profile) => profile.featured) : items
   ).slice(0, 3);
