@@ -7,10 +7,12 @@ import { getContent } from '@/lib/content';
 
 export default async function HomePage() {
   const content = await getContent();
+  const coverStory =
+    content.featuredStories.find((s) => s.slug === content.hero.slug) || content.featuredStories[0];
 
   return (
     <>
-      <Hero hero={content.hero} />
+      {coverStory && <Hero hero={content.hero} story={coverStory} />}
       <FeaturedStories items={content.featuredStories} />
       <AthleteProfiles items={content.athleteProfiles} />
       <Documentaries items={content.documentaries} />

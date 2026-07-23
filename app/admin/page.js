@@ -183,55 +183,47 @@ export default function AdminPage() {
       </Section>
 
       <Section title="Hero / Cover Story">
+        <p className="text-soft text-sm mb-4 max-w-2xl">
+          The cover story is always one of your Featured Stories below — its title, description,
+          image, date, and full text come from there, so there's nothing to duplicate here. Pick
+          which one to feature and set the kicker/read time.
+        </p>
         <div className="flex flex-col gap-3 max-w-2xl">
-          {[
-            { key: 'kicker', label: 'Kicker' },
-            { key: 'headline', label: 'Headline', textarea: true },
-            { key: 'description', label: 'Description', textarea: true },
-            { key: 'date', label: 'Date' },
-            { key: 'readTime', label: 'Read time' },
-            { key: 'body', label: 'Full story (blank line between paragraphs)', paragraphs: true },
-          ].map((f) => (
-            <label key={f.key} className="flex flex-col gap-1 text-sm">
-              <span className="kicker text-soft">{f.label}</span>
-              {f.paragraphs ? (
-                <textarea
-                  value={(content.hero[f.key] || []).join('\n\n')}
-                  onChange={(e) =>
-                    setContent({
-                      ...content,
-                      hero: {
-                        ...content.hero,
-                        [f.key]: e.target.value.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
-                      },
-                    })
-                  }
-                  rows={6}
-                  placeholder="Separate paragraphs with a blank line"
-                  className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
-                />
-              ) : f.textarea ? (
-                <textarea
-                  value={content.hero[f.key] || ''}
-                  onChange={(e) => setContent({ ...content, hero: { ...content.hero, [f.key]: e.target.value } })}
-                  rows={3}
-                  className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
-                />
-              ) : (
-                <input
-                  type="text"
-                  value={content.hero[f.key] || ''}
-                  onChange={(e) => setContent({ ...content, hero: { ...content.hero, [f.key]: e.target.value } })}
-                  className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
-                />
-              )}
-            </label>
-          ))}
-          <ImageUploadField
-            label="Image"
-            value={content.hero.image}
-            onChange={(url) => setContent({ ...content, hero: { ...content.hero, image: url } })}
-          />
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Featured story</span>
+            <select
+              value={content.hero.slug || ''}
+              onChange={(e) => setContent({ ...content, hero: { ...content.hero, slug: e.target.value } })}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink bg-paper"
+            >
+              <option value="" disabled>
+                Select a story…
+              </option>
+              {content.featuredStories.map((story) => (
+                <option key={story.slug} value={story.slug}>
+                  {story.title}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Kicker</span>
+            <input
+              type="text"
+              value={content.hero.kicker || ''}
+              onChange={(e) => setContent({ ...content, hero: { ...content.hero, kicker: e.target.value } })}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Read time</span>
+            <input
+              type="text"
+              value={content.hero.readTime || ''}
+              onChange={(e) => setContent({ ...content, hero: { ...content.hero, readTime: e.target.value } })}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+            />
+          </label>
         </div>
         <SaveButton
           saving={savingKey === 'hero'}

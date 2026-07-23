@@ -19,6 +19,11 @@
 // /featured-stories/fourth-quarter-kid, /writing/sixth-grade-cuts). This is
 // separate from `description`, which stays a short teaser used on cards and
 // list rows. Replace the placeholder paragraph below with the real story.
+//
+// `hero.slug` points at one of the featuredStories items — the homepage
+// cover story is always that story's title/description/image/date/body,
+// so there's nothing to duplicate. Change hero.slug to feature a different
+// story; hero.kicker and hero.readTime are the only fields specific to hero.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const site = {
@@ -47,14 +52,8 @@ export const nav = [
 
 export const hero = {
   kicker: 'Cover Story',
-  headline: 'Beyond the Scoreboard: the habits behind elite high school athletes',
-  description:
-    'A season embedded with three varsity programs reveals what separates the athletes who last from the ones who burn out — long before scholarship offers ever arrive.',
-  date: 'July 18, 2026',
+  slug: 'fourth-quarter-kid',
   readTime: '12 min read',
-  body: [
-    'Full story text goes here — replace this placeholder paragraph (or add more paragraphs to the array) in data/content.js, or edit it from the Hero section in /admin.',
-  ],
 };
 
 // Full list — homepage shows the first 3, /featured-stories shows all of them.
