@@ -12,7 +12,6 @@ export default async function InvestigationsPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Five"
         title={sectionLabels.investigations}
         description="Deeper, multi-source reporting on the systems and decisions behind high school athletics."
       />

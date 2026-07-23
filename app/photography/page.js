@@ -11,7 +11,6 @@ export default async function PhotographyPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Seven"
         title={sectionLabels.photography}
         description="Sideline and behind-the-scenes photography from the seasons I've covered."
       />

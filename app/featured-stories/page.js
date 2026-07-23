@@ -12,7 +12,6 @@ export default async function FeaturedStoriesPage() {
   return (
     <>
       <PageIntro
-        kicker="Section One"
         title={sectionLabels.featuredStories}
         description="The major reporting and human-interest work I'm most proud of, in one place."
       />

@@ -12,7 +12,6 @@ export default async function DocumentariesPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Three"
         title={sectionLabels.documentaries}
         description="Short-form video work — profiles, season-long follows, and behind-the-scenes reporting."
       />

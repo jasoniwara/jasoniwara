@@ -12,7 +12,6 @@ export default async function AthleteProfilesPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Two"
         title={sectionLabels.athleteProfiles}
         description="Long-form, human-interest stories built around a single athlete — not just their season, but their story."
       />

@@ -10,7 +10,6 @@ export default function AthleteProfiles({ items, label = 'Athlete Profiles' }) {
   return (
     <section className="max-w-content mx-auto px-6 md:px-10 py-16 border-b border-rule">
       <SectionHeading
-        eyebrow="Section Two"
         title={label}
         seeAllHref="/athlete-profiles"
       />

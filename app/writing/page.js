@@ -12,7 +12,6 @@ export default async function WritingPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Four"
         title={sectionLabels.latestWriting}
         description="Columns, features, and reporting, newest first."
       />

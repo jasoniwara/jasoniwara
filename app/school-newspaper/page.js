@@ -12,7 +12,6 @@ export default async function SchoolNewspaperPage() {
   return (
     <>
       <PageIntro
-        kicker="Section Six"
         title={sectionLabels.schoolNewspaper}
         description="Clips published in the student paper — game stories, news reporting, and features."
       />

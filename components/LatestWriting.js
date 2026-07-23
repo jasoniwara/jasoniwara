@@ -7,7 +7,6 @@ export default function LatestWriting({ items, label = 'Writing' }) {
   return (
     <section className="max-w-content mx-auto px-6 md:px-10 py-16">
       <SectionHeading
-        eyebrow="Section Four"
         title={label}
         seeAllHref="/writing"
       />
