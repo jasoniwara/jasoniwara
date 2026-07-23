@@ -9,7 +9,7 @@ export default function StoryPage({ kicker, title, meta, image, body, backHref, 
         &larr; {backLabel}
       </Link>
 
-      <div className="max-w-2xl mt-6">
+      <div className="max-w-2xl mx-auto mt-6">
         {kicker && <p className="kicker text-press mb-4">{kicker}</p>}
         <h1 className="font-serif text-3xl sm:text-4xl text-ink leading-[1.1] mb-4">{title}</h1>
         {meta.length > 0 && (
@@ -25,12 +25,12 @@ export default function StoryPage({ kicker, title, meta, image, body, backHref, 
       </div>
 
       {image && (
-        <div className="aspect-[16/9] max-w-3xl bg-panel border border-rule overflow-hidden mb-10">
+        <div className="aspect-[16/9] max-w-3xl mx-auto bg-panel border border-rule overflow-hidden mb-10">
           <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
       )}
 
-      <div className="flex flex-col gap-5 max-w-2xl">
+      <div className="flex flex-col gap-5 max-w-2xl mx-auto">
         {(body && body.length > 0 ? body : ['This story has no text yet.']).map((p, i) => (
           <p key={i} className={`text-soft text-lg leading-relaxed ${i === 0 ? 'drop-cap' : ''}`}>
             {p}

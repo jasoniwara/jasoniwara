@@ -22,12 +22,12 @@ export default async function DocumentaryPage({ params }) {
         &larr; Mini Documentaries
       </Link>
 
-      <div className="max-w-2xl mt-6">
+      <div className="max-w-2xl mx-auto mt-6">
         <h1 className="font-serif text-3xl sm:text-4xl text-ink leading-[1.1] mb-4">{doc.title}</h1>
         {doc.duration && <p className="kicker text-soft mb-10">{doc.duration}</p>}
       </div>
 
-      <div className="relative aspect-video max-w-3xl bg-ink border border-rule overflow-hidden mb-10">
+      <div className="relative aspect-video max-w-3xl mx-auto bg-ink border border-rule overflow-hidden mb-10">
         {embedUrl ? (
           <iframe
             src={embedUrl}
@@ -43,7 +43,7 @@ export default async function DocumentaryPage({ params }) {
         )}
       </div>
 
-      <div className="flex flex-col gap-5 max-w-2xl">
+      <div className="flex flex-col gap-5 max-w-2xl mx-auto">
         {(doc.body && doc.body.length > 0 ? doc.body : ['This documentary has no write-up yet.']).map((p, i) => (
           <p key={i} className={`text-soft text-lg leading-relaxed ${i === 0 ? 'drop-cap' : ''}`}>
             {p}

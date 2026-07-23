@@ -68,6 +68,7 @@ button:focus-visible {
 
 .stamp {
   border: 1.5px solid #7C2320;
-  color: #7C2320;
+  background-color: #7C2320;
+  color: #FAF9F6;
   transform: rotate(-4deg);
 }
