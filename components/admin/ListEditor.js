@@ -2,7 +2,7 @@
 
 import ImageUploadField from './ImageUploadField';
 
-export default function ListEditor({ items, onChange, fields, addLabel = 'Add item' }) {
+export default function ListEditor({ items, onChange, fields, addLabel = 'Add item', onRemove, removeLabel = 'Remove' }) {
   const update = (index, key, value) => {
     const next = items.slice();
     next[index] = { ...next[index], [key]: value };
@@ -10,7 +10,11 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
   };
 
   const remove = (index) => {
-    onChange(items.filter((_, i) => i !== index));
+    if (onRemove) {
+      onRemove(index);
+    } else {
+      onChange(items.filter((_, i) => i !== index));
+    }
   };
 
   const add = () => {
@@ -31,7 +35,7 @@ export default function ListEditor({ items, onChange, fields, addLabel = 'Add it
             aria-label="Remove item"
             className="absolute top-2 right-2 text-soft hover:text-press text-sm"
           >
-            Remove
+            {removeLabel}
           </button>
           <div className="grid sm:grid-cols-2 gap-3 pr-16">
             {fields.map((f) =>

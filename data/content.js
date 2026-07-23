@@ -20,10 +20,17 @@
 // separate from `description`, which stays a short teaser used on cards and
 // list rows. Replace the placeholder paragraph below with the real story.
 //
-// `hero.slug` points at one of the featuredStories items — the homepage
-// cover story is always that story's title/description/image/date/body,
-// so there's nothing to duplicate. Change hero.slug to feature a different
-// story; hero.kicker and hero.readTime are the only fields specific to hero.
+// `hero.source` + `hero.slug` point at an item in any of the six story
+// sections (featuredStories, athleteProfiles, documentaries, latestWriting,
+// investigations, schoolNewspaper) — the homepage cover story is always
+// that item's title/description/image/date/body, so there's nothing to
+// duplicate. hero.kicker and hero.readTime are the only fields specific
+// to the hero itself.
+//
+// `sectionLabels` controls the display name shown for each section — in
+// the sidebar, the homepage section heading, and that section's own page
+// title. Renaming a label here (or from /admin) never changes the items
+// inside that section, just what it's called.
 // ─────────────────────────────────────────────────────────────────────────
 
 export const site = {
@@ -39,21 +46,51 @@ export const site = {
 };
 
 // Every sidebar item now points at a real page in the /app directory.
+// `key` ties each entry back to its content section so its displayed
+// label can be renamed via sectionLabels (or about.heading / contact.heading)
+// without editing this structural list.
 export const nav = [
-  { label: 'Athlete Profiles', href: '/athlete-profiles', page: '01' },
-  { label: 'Mini Documentaries', href: '/documentaries', page: '02' },
-  { label: 'School Newspaper', href: '/school-newspaper', page: '03' },
-  { label: 'Writing', href: '/writing', page: '04' },
-  { label: 'Investigations', href: '/investigations', page: '05' },
-  { label: 'Photography', href: '/photography', page: '06' },
-  { label: 'About', href: '/about', page: '07' },
-  { label: 'Contact', href: '/contact', page: '08' },
+  { key: 'athleteProfiles', label: 'Athlete Profiles', href: '/athlete-profiles', page: '01' },
+  { key: 'documentaries', label: 'Mini Documentaries', href: '/documentaries', page: '02' },
+  { key: 'schoolNewspaper', label: 'School Newspaper', href: '/school-newspaper', page: '03' },
+  { key: 'latestWriting', label: 'Writing', href: '/writing', page: '04' },
+  { key: 'investigations', label: 'Investigations', href: '/investigations', page: '05' },
+  { key: 'photography', label: 'Photography', href: '/photography', page: '06' },
+  { key: 'about', label: 'About', href: '/about', page: '07' },
+  { key: 'contact', label: 'Contact', href: '/contact', page: '08' },
 ];
+
+// Display names for each content section — rename any of these (in
+// data/content.js or the "Category Names" panel in /admin) and it updates
+// the sidebar, the homepage section heading, and that section's page title.
+export const sectionLabels = {
+  featuredStories: 'Featured Stories',
+  athleteProfiles: 'Athlete Profiles',
+  documentaries: 'Mini Documentaries',
+  latestWriting: 'Writing',
+  investigations: 'Investigations',
+  schoolNewspaper: 'School Newspaper',
+  photography: 'Photography',
+};
 
 export const hero = {
   kicker: 'Cover Story',
+  source: 'featuredStories',
   slug: 'fourth-quarter-kid',
   readTime: '12 min read',
+};
+
+// Items removed from any of these lists in /admin land here instead of
+// being deleted outright — restore them or delete permanently from the
+// Archive panel.
+export const archive = {
+  featuredStories: [],
+  athleteProfiles: [],
+  documentaries: [],
+  latestWriting: [],
+  investigations: [],
+  schoolNewspaper: [],
+  photography: [],
 };
 
 // Full list — homepage shows the first 3, /featured-stories shows all of them.

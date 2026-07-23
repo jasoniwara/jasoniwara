@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SectionHeading from './SectionHeading';
 
-export default function AthleteProfiles({ items }) {
+export default function AthleteProfiles({ items, label = 'Athlete Profiles' }) {
   if (!items || items.length === 0) return null;
 
   const featured = (
@@ -11,7 +11,7 @@ export default function AthleteProfiles({ items }) {
     <section className="max-w-content mx-auto px-6 md:px-10 py-16 border-b border-rule">
       <SectionHeading
         eyebrow="Section Two"
-        title="Athlete Profiles"
+        title={label}
         seeAllHref="/athlete-profiles"
       />
       <div className="grid md:grid-cols-3 gap-10">

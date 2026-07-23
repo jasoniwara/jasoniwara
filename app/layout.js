@@ -15,13 +15,20 @@ export async function generateMetadata() {
   };
 }
 
+function resolveNavLabel(item, content) {
+  if (item.key === 'about') return content.about.heading || item.label;
+  if (item.key === 'contact') return content.contact.heading || item.label;
+  return content.sectionLabels[item.key] || item.label;
+}
+
 export default async function RootLayout({ children }) {
   const content = await getContent();
+  const nav = content.nav.map((item) => ({ ...item, label: resolveNavLabel(item, content) }));
 
   return (
     <html lang="en">
       <body>
-        <SiteChrome site={content.site} nav={content.nav}>
+        <SiteChrome site={content.site} nav={nav}>
           {children}
         </SiteChrome>
       </body>

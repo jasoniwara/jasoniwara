@@ -2,15 +2,18 @@ import PageIntro from '@/components/PageIntro';
 import ProjectCard from '@/components/ProjectCard';
 import { getContent } from '@/lib/content';
 
-export const metadata = { title: 'Mini Documentaries — jordan reese' };
+export async function generateMetadata() {
+  const { site, sectionLabels } = await getContent();
+  return { title: `${sectionLabels.documentaries} — ${site.name}` };
+}
 
 export default async function DocumentariesPage() {
-  const { documentaries } = await getContent();
+  const { documentaries, sectionLabels } = await getContent();
   return (
     <>
       <PageIntro
         kicker="Section Three"
-        title="Mini Documentaries"
+        title={sectionLabels.documentaries}
         description="Short-form video work — profiles, season-long follows, and behind-the-scenes reporting."
       />
       <section className="max-w-content mx-auto px-6 md:px-10 py-16">

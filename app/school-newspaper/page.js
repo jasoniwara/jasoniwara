@@ -2,15 +2,18 @@ import Link from 'next/link';
 import PageIntro from '@/components/PageIntro';
 import { getContent } from '@/lib/content';
 
-export const metadata = { title: 'School Newspaper — jordan reese' };
+export async function generateMetadata() {
+  const { site, sectionLabels } = await getContent();
+  return { title: `${sectionLabels.schoolNewspaper} — ${site.name}` };
+}
 
 export default async function SchoolNewspaperPage() {
-  const { schoolNewspaper } = await getContent();
+  const { schoolNewspaper, sectionLabels } = await getContent();
   return (
     <>
       <PageIntro
         kicker="Section Six"
-        title="School Newspaper"
+        title={sectionLabels.schoolNewspaper}
         description="Clips published in the student paper — game stories, news reporting, and features."
       />
       <section className="max-w-content mx-auto px-6 md:px-10 py-16">

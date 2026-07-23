@@ -2,15 +2,18 @@ import Link from 'next/link';
 import PageIntro from '@/components/PageIntro';
 import { getContent } from '@/lib/content';
 
-export const metadata = { title: 'Athlete Profiles — jordan reese' };
+export async function generateMetadata() {
+  const { site, sectionLabels } = await getContent();
+  return { title: `${sectionLabels.athleteProfiles} — ${site.name}` };
+}
 
 export default async function AthleteProfilesPage() {
-  const { athleteProfiles } = await getContent();
+  const { athleteProfiles, sectionLabels } = await getContent();
   return (
     <>
       <PageIntro
         kicker="Section Two"
-        title="Athlete Profiles"
+        title={sectionLabels.athleteProfiles}
         description="Long-form, human-interest stories built around a single athlete — not just their season, but their story."
       />
       <section className="max-w-content mx-auto px-6 md:px-10 py-16">

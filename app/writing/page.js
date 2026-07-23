@@ -2,15 +2,18 @@ import Link from 'next/link';
 import PageIntro from '@/components/PageIntro';
 import { getContent } from '@/lib/content';
 
-export const metadata = { title: 'Writing — jordan reese' };
+export async function generateMetadata() {
+  const { site, sectionLabels } = await getContent();
+  return { title: `${sectionLabels.latestWriting} — ${site.name}` };
+}
 
 export default async function WritingPage() {
-  const { latestWriting } = await getContent();
+  const { latestWriting, sectionLabels } = await getContent();
   return (
     <>
       <PageIntro
         kicker="Section Four"
-        title="Writing"
+        title={sectionLabels.latestWriting}
         description="Columns, features, and reporting, newest first."
       />
       <section className="max-w-content mx-auto px-6 md:px-10 py-16">

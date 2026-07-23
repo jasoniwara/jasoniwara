@@ -1,15 +1,18 @@
 import PageIntro from '@/components/PageIntro';
 import { getContent } from '@/lib/content';
 
-export const metadata = { title: 'Photography — jordan reese' };
+export async function generateMetadata() {
+  const { site, sectionLabels } = await getContent();
+  return { title: `${sectionLabels.photography} — ${site.name}` };
+}
 
 export default async function PhotographyPage() {
-  const { photography } = await getContent();
+  const { photography, sectionLabels } = await getContent();
   return (
     <>
       <PageIntro
         kicker="Section Seven"
-        title="Photography"
+        title={sectionLabels.photography}
         description="Sideline and behind-the-scenes photography from the seasons I've covered."
       />
       <section className="max-w-content mx-auto px-6 md:px-10 py-16">

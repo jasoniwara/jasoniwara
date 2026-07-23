@@ -3,9 +3,26 @@
 import { useEffect, useState } from 'react';
 import ListEditor from '@/components/admin/ListEditor';
 import ImageUploadField from '@/components/admin/ImageUploadField';
+import { STORY_SECTIONS, ARCHIVABLE_SECTIONS } from '@/lib/sections';
+
+const SECTION_LABEL_META = [
+  { key: 'featuredStories', hint: 'Homepage heading + /featured-stories page title' },
+  { key: 'athleteProfiles', hint: 'Sidebar + /athlete-profiles page title' },
+  { key: 'documentaries', hint: 'Sidebar + /documentaries page title' },
+  { key: 'latestWriting', hint: 'Sidebar + /writing page title' },
+  { key: 'investigations', hint: 'Sidebar + /investigations page title' },
+  { key: 'schoolNewspaper', hint: 'Sidebar + /school-newspaper page title' },
+  { key: 'photography', hint: 'Sidebar + /photography page title' },
+];
+
+function itemLabel(item) {
+  return item.title || item.caption || item.name || 'Untitled';
+}
 
 const emptyContent = {
   site: {},
+  nav: [],
+  sectionLabels: {},
   hero: {},
   featuredStories: [],
   athleteProfiles: [],
@@ -16,6 +33,7 @@ const emptyContent = {
   photography: [],
   about: { paragraphs: [], facts: [] },
   contact: {},
+  archive: Object.fromEntries(ARCHIVABLE_SECTIONS.map((k) => [k, []])),
 };
 
 function Section({ title, children }) {
@@ -94,14 +112,16 @@ export default function AdminPage() {
     setAuthed(false);
   }
 
-  async function saveSection(key, value) {
-    setSavingKey(key);
+  // Low-level: PUT a partial content object, tagging the request/response
+  // with `savingLabel` so the right button can show its saving/saved state.
+  async function persist(savingLabel, partial) {
+    setSavingKey(savingLabel);
     setSavedKey(null);
     setSaveError('');
     const res = await fetch('/api/content', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [key]: value }),
+      body: JSON.stringify(partial),
     });
     const data = await res.json();
     setSavingKey(null);
@@ -110,8 +130,50 @@ export default function AdminPage() {
       return;
     }
     setContent({ ...emptyContent, ...data });
-    setSavedKey(key);
+    setSavedKey(savingLabel);
     setTimeout(() => setSavedKey(null), 2000);
+  }
+
+  // Used by simple single-key sections (site, hero, sectionLabels, about, contact).
+  function saveSection(key, value) {
+    return persist(key, { [key]: value });
+  }
+
+  // Used by the 7 archivable list sections — saves the edited list *and*
+  // whatever's currently staged in local archive state together, since
+  // removing an item moves it into content.archive locally first.
+  function saveListSection(key) {
+    return persist(key, { [key]: content[key], archive: content.archive });
+  }
+
+  // Moves an item out of a list and into content.archive, locally only —
+  // still requires pressing that section's Save button to persist, same
+  // as any other edit.
+  function archiveItem(key, index) {
+    const items = content[key];
+    const item = items[index];
+    const nextItems = items.filter((_, i) => i !== index);
+    const nextArchive = { ...content.archive, [key]: [...(content.archive[key] || []), item] };
+    setContent({ ...content, [key]: nextItems, archive: nextArchive });
+  }
+
+  // Restore/delete-permanently act immediately (no separate Save step) —
+  // they're deliberate, one-off maintenance actions on the archive itself.
+  async function restoreItem(key, index) {
+    const archived = content.archive[key];
+    const item = archived[index];
+    const nextArchive = { ...content.archive, [key]: archived.filter((_, i) => i !== index) };
+    const nextItems = [...content[key], item];
+    setContent({ ...content, [key]: nextItems, archive: nextArchive });
+    await persist(`archive-${key}`, { [key]: nextItems, archive: nextArchive });
+  }
+
+  async function purgeItem(key, index) {
+    const item = content.archive[key][index];
+    if (!window.confirm(`Permanently delete "${itemLabel(item)}"? This can't be undone.`)) return;
+    const nextArchive = { ...content.archive, [key]: content.archive[key].filter((_, i) => i !== index) };
+    setContent({ ...content, archive: nextArchive });
+    await persist(`archive-${key}`, { archive: nextArchive });
   }
 
   if (!authChecked) {
@@ -145,6 +207,8 @@ export default function AdminPage() {
       </div>
     );
   }
+
+  const totalArchived = ARCHIVABLE_SECTIONS.reduce((n, key) => n + (content.archive[key] || []).length, 0);
 
   return (
     <div className="max-w-content mx-auto px-6 py-16">
@@ -182,15 +246,67 @@ export default function AdminPage() {
         />
       </Section>
 
+      <Section title="Category Names">
+        <p className="text-soft text-sm mb-4 max-w-2xl">
+          Rename how each section is labeled across the site — sidebar, homepage headings, and
+          page titles all update together. The stories/items inside each section don't change.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-3 max-w-2xl">
+          {SECTION_LABEL_META.map(({ key, hint }) => (
+            <label key={key} className="flex flex-col gap-1 text-sm">
+              <span className="kicker text-soft">{key}</span>
+              <input
+                type="text"
+                value={content.sectionLabels[key] || ''}
+                onChange={(e) =>
+                  setContent({ ...content, sectionLabels: { ...content.sectionLabels, [key]: e.target.value } })
+                }
+                className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+              />
+              <span className="text-soft text-xs">{hint}</span>
+            </label>
+          ))}
+        </div>
+        <p className="text-soft text-sm mt-4 max-w-2xl">
+          About and Contact are renamed from their own sections below (Heading field).
+        </p>
+        <SaveButton
+          saving={savingKey === 'sectionLabels'}
+          saved={savedKey === 'sectionLabels'}
+          onClick={() => saveSection('sectionLabels', content.sectionLabels)}
+        />
+      </Section>
+
       <Section title="Hero / Cover Story">
         <p className="text-soft text-sm mb-4 max-w-2xl">
-          The cover story is always one of your Featured Stories below — its title, description,
-          image, date, and full text come from there, so there's nothing to duplicate here. Pick
-          which one to feature and set the kicker/read time.
+          The cover story is always pulled from an existing item in one of the sections below —
+          its title, description, image, date, and full text come from there, so there's nothing
+          to duplicate here. Pick a category, then a specific story.
         </p>
         <div className="flex flex-col gap-3 max-w-2xl">
           <label className="flex flex-col gap-1 text-sm">
-            <span className="kicker text-soft">Featured story</span>
+            <span className="kicker text-soft">Category</span>
+            <select
+              value={content.hero.source || ''}
+              onChange={(e) => {
+                const nextSource = e.target.value;
+                const nextItems = content[nextSource] || [];
+                setContent({
+                  ...content,
+                  hero: { ...content.hero, source: nextSource, slug: nextItems[0]?.slug || '' },
+                });
+              }}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink bg-paper"
+            >
+              {STORY_SECTIONS.map(({ key }) => (
+                <option key={key} value={key}>
+                  {content.sectionLabels[key] || key}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Story</span>
             <select
               value={content.hero.slug || ''}
               onChange={(e) => setContent({ ...content, hero: { ...content.hero, slug: e.target.value } })}
@@ -199,9 +315,9 @@ export default function AdminPage() {
               <option value="" disabled>
                 Select a story…
               </option>
-              {content.featuredStories.map((story) => (
-                <option key={story.slug} value={story.slug}>
-                  {story.title}
+              {(content[content.hero.source] || []).map((item) => (
+                <option key={item.slug} value={item.slug}>
+                  {itemLabel(item)}
                 </option>
               ))}
             </select>
@@ -232,10 +348,12 @@ export default function AdminPage() {
         />
       </Section>
 
-      <Section title="Featured Stories">
+      <Section title={content.sectionLabels.featuredStories || 'Featured Stories'}>
         <ListEditor
           items={content.featuredStories}
           onChange={(items) => setContent({ ...content, featuredStories: items })}
+          onRemove={(i) => archiveItem('featuredStories', i)}
+          removeLabel="Archive"
           addLabel="Add story"
           fields={[
             { key: 'title', label: 'Title' },
@@ -250,14 +368,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'featuredStories'}
           saved={savedKey === 'featuredStories'}
-          onClick={() => saveSection('featuredStories', content.featuredStories)}
+          onClick={() => saveListSection('featuredStories')}
         />
       </Section>
 
-      <Section title="Athlete Profiles">
+      <Section title={content.sectionLabels.athleteProfiles || 'Athlete Profiles'}>
         <ListEditor
           items={content.athleteProfiles}
           onChange={(items) => setContent({ ...content, athleteProfiles: items })}
+          onRemove={(i) => archiveItem('athleteProfiles', i)}
+          removeLabel="Archive"
           addLabel="Add profile"
           fields={[
             { key: 'name', label: 'Athlete name' },
@@ -271,14 +391,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'athleteProfiles'}
           saved={savedKey === 'athleteProfiles'}
-          onClick={() => saveSection('athleteProfiles', content.athleteProfiles)}
+          onClick={() => saveListSection('athleteProfiles')}
         />
       </Section>
 
-      <Section title="Documentaries">
+      <Section title={content.sectionLabels.documentaries || 'Documentaries'}>
         <ListEditor
           items={content.documentaries}
           onChange={(items) => setContent({ ...content, documentaries: items })}
+          onRemove={(i) => archiveItem('documentaries', i)}
+          removeLabel="Archive"
           addLabel="Add documentary"
           fields={[
             { key: 'title', label: 'Title' },
@@ -292,14 +414,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'documentaries'}
           saved={savedKey === 'documentaries'}
-          onClick={() => saveSection('documentaries', content.documentaries)}
+          onClick={() => saveListSection('documentaries')}
         />
       </Section>
 
-      <Section title="Writing">
+      <Section title={content.sectionLabels.latestWriting || 'Writing'}>
         <ListEditor
           items={content.latestWriting}
           onChange={(items) => setContent({ ...content, latestWriting: items })}
+          onRemove={(i) => archiveItem('latestWriting', i)}
+          removeLabel="Archive"
           addLabel="Add piece"
           fields={[
             { key: 'title', label: 'Title' },
@@ -311,14 +435,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'latestWriting'}
           saved={savedKey === 'latestWriting'}
-          onClick={() => saveSection('latestWriting', content.latestWriting)}
+          onClick={() => saveListSection('latestWriting')}
         />
       </Section>
 
-      <Section title="Investigations">
+      <Section title={content.sectionLabels.investigations || 'Investigations'}>
         <ListEditor
           items={content.investigations}
           onChange={(items) => setContent({ ...content, investigations: items })}
+          onRemove={(i) => archiveItem('investigations', i)}
+          removeLabel="Archive"
           addLabel="Add investigation"
           fields={[
             { key: 'title', label: 'Title' },
@@ -330,14 +456,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'investigations'}
           saved={savedKey === 'investigations'}
-          onClick={() => saveSection('investigations', content.investigations)}
+          onClick={() => saveListSection('investigations')}
         />
       </Section>
 
-      <Section title="School Newspaper">
+      <Section title={content.sectionLabels.schoolNewspaper || 'School Newspaper'}>
         <ListEditor
           items={content.schoolNewspaper}
           onChange={(items) => setContent({ ...content, schoolNewspaper: items })}
+          onRemove={(i) => archiveItem('schoolNewspaper', i)}
+          removeLabel="Archive"
           addLabel="Add clip"
           fields={[
             { key: 'title', label: 'Title' },
@@ -350,14 +478,16 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'schoolNewspaper'}
           saved={savedKey === 'schoolNewspaper'}
-          onClick={() => saveSection('schoolNewspaper', content.schoolNewspaper)}
+          onClick={() => saveListSection('schoolNewspaper')}
         />
       </Section>
 
-      <Section title="Photography">
+      <Section title={content.sectionLabels.photography || 'Photography'}>
         <ListEditor
           items={content.photography}
           onChange={(items) => setContent({ ...content, photography: items })}
+          onRemove={(i) => archiveItem('photography', i)}
+          removeLabel="Archive"
           addLabel="Add photo caption"
           fields={[
             { key: 'caption', label: 'Caption' },
@@ -368,12 +498,21 @@ export default function AdminPage() {
         <SaveButton
           saving={savingKey === 'photography'}
           saved={savedKey === 'photography'}
-          onClick={() => saveSection('photography', content.photography)}
+          onClick={() => saveListSection('photography')}
         />
       </Section>
 
       <Section title="About">
         <div className="flex flex-col gap-3 max-w-2xl mb-6">
+          <label className="flex flex-col gap-1 text-sm">
+            <span className="kicker text-soft">Heading</span>
+            <input
+              type="text"
+              value={content.about.heading || ''}
+              onChange={(e) => setContent({ ...content, about: { ...content.about, heading: e.target.value } })}
+              className="border border-rule px-3 py-2 font-serif focus:outline-none focus:border-ink"
+            />
+          </label>
           <label className="flex flex-col gap-1 text-sm">
             <span className="kicker text-soft">Photo caption</span>
             <input
@@ -468,6 +607,50 @@ export default function AdminPage() {
           saved={savedKey === 'contact'}
           onClick={() => saveSection('contact', content.contact)}
         />
+      </Section>
+
+      <Section title={`Archive${totalArchived ? ` (${totalArchived})` : ''}`}>
+        <p className="text-soft text-sm mb-4 max-w-2xl">
+          Items removed from a section above land here instead of disappearing. Restore one back
+          into its section, or delete it permanently.
+        </p>
+        {totalArchived === 0 ? (
+          <p className="text-soft text-sm">Nothing archived.</p>
+        ) : (
+          <div className="flex flex-col gap-6">
+            {ARCHIVABLE_SECTIONS.filter((key) => (content.archive[key] || []).length > 0).map((key) => (
+              <div key={key}>
+                <p className="kicker text-press mb-2">{content.sectionLabels[key] || key}</p>
+                <div className="flex flex-col gap-2">
+                  {content.archive[key].map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between gap-4 border border-rule px-4 py-3"
+                    >
+                      <span className="font-serif text-ink">{itemLabel(item)}</span>
+                      <div className="flex items-center gap-4 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => restoreItem(key, i)}
+                          className="kicker text-press hover:underline"
+                        >
+                          Restore
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => purgeItem(key, i)}
+                          className="kicker text-soft hover:text-press"
+                        >
+                          Delete permanently
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </Section>
     </div>
   );
